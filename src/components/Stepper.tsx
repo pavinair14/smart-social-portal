@@ -1,9 +1,10 @@
+import { memo } from "react";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
 import type { StepperType } from "./types";
 
-export const Stepper: React.FC<StepperType> = ({ steps, currentStep }) => (
+export const Stepper: React.FC<StepperType> = memo(({ steps, currentStep }) => (
     <div className="relative flex justify-between items-center w-full pb-6 pt-2">
         {steps.map((step: { title: string }, index: number) => {
             const isCompleted = index < currentStep;
@@ -68,4 +69,4 @@ export const Stepper: React.FC<StepperType> = ({ steps, currentStep }) => (
             )
         })}
     </div>
-)
+));

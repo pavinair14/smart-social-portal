@@ -1,14 +1,17 @@
 import { Info } from "lucide-react";
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 
-export const ErrorField: React.FC<{ error: string }> = ({ error }) => {
+export const ErrorField: React.FC<{ error: string }> = memo(({ error }) => {
     const [showTooltip, setShowTooltip] = useState(false);
+
+    const handleMouseEnter = useCallback(() => setShowTooltip(true), []);
+    const handleMouseLeave = useCallback(() => setShowTooltip(false), []);
 
     return (
         <div
             className="absolute right-5 top-2.5 cursor-pointer text-red-500"
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
         >
             <Info size={16} />
             {showTooltip && (
@@ -18,4 +21,4 @@ export const ErrorField: React.FC<{ error: string }> = ({ error }) => {
             )}
         </div>
     );
-}
+});

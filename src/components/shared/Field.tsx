@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, memo } from "react";
 import { motion } from "framer-motion";
 import type { FieldProps } from "../steps/personalInfo/types";
 import { useFormContext } from "react-hook-form";
@@ -6,7 +6,7 @@ import { cityMap } from "../steps/personalInfo/constants";
 import { ErrorField } from "../steps/Error";
 
 
-export const Field: React.FC<FieldProps> = ({
+export const Field: React.FC<FieldProps> = memo(({
     id,
     label,
     type = "text",
@@ -25,7 +25,7 @@ export const Field: React.FC<FieldProps> = ({
     const countryVal = watch("country");
 
     useEffect(() => {
-        if (!city) return;
+        if (!city || id !== "city") return;
         const key = Object.keys(cityMap).find((k) => k.toLowerCase() === city.toLowerCase());
         if (!key) return;
 
@@ -34,7 +34,10 @@ export const Field: React.FC<FieldProps> = ({
         if (!stateVal) setValue("state", mapping.state, { shouldValidate: true, shouldDirty: true });
         if (!countryVal) setValue("country", mapping.country, { shouldValidate: true, shouldDirty: true });
 
-    }, [city, setValue]);
+    }, [city, countryVal, id, setValue, stateVal]);
+
+    const handleFocus = useCallback(() => setFocused(true), []);
+    const handleBlur = useCallback(() => setFocused(false), []);
 
     const base = "w-full bg-transparent border-b border-gray-300 py-2 text-gray-800 focus:outline-none";
 
@@ -49,8 +52,8 @@ export const Field: React.FC<FieldProps> = ({
                     <select
                         id={id}
                         {...register}
-                        onFocus={() => setFocused(true)}
-                        onBlur={() => setFocused(false)}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
                         className={base}
                     >
                         <option value="">Select</option>
@@ -64,8 +67,8 @@ export const Field: React.FC<FieldProps> = ({
                     <textarea
                         id={id}
                         {...register}
-                        onFocus={() => setFocused(true)}
-                        onBlur={() => setFocused(false)}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
                         placeholder={placeholder}
                         className={`${base} resize-none h-20`}
                     />
@@ -74,8 +77,8 @@ export const Field: React.FC<FieldProps> = ({
                         id={id}
                         type={type}
                         {...register}
-                        onFocus={() => setFocused(true)}
-                        onBlur={() => setFocused(false)}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
                         placeholder={placeholder}
                         className={base}
                     />
@@ -93,4 +96,4 @@ export const Field: React.FC<FieldProps> = ({
             </div>
         </div >
     );
-};
+});

@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { Button } from "@/components/ui/button"
 import { DialogHeader, DialogFooter, Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import type { SuggestionModalProps } from "./types";
@@ -6,10 +7,10 @@ import { Sparkle } from "lucide-react";
 export const SuggestionModal: React.FC<SuggestionModalProps> = (props) => {
     const { open, setOpen, loading, suggestion, setSuggestion, handleRewrite, handleAccept } = props;
 
-    const handleCancel = () => {
+    const handleCancel = useCallback(() => {
         setOpen(false);
         setSuggestion("");
-    };
+    }, [setOpen, setSuggestion]);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>

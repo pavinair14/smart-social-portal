@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { getAISuggestion } from "../../../services/aiClient";
 import { useFormContext } from "react-hook-form";
@@ -14,7 +14,7 @@ export const SituationDescription = () => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
-    const handleAIClick = async (field: string, label: string) => {
+    const handleAIClick = useCallback(async (field: string, label: string) => {
         setActiveField(field);
         setLoading(true);
         const userText = watch(field);
@@ -23,16 +23,16 @@ export const SituationDescription = () => {
         setSuggestion(aiText.replace(/"/g, ''));
         setLoading(false);
         setOpen(true);
-    };
+    }, [watch]);
 
-    const handleAccept = () => {
+    const handleAccept = useCallback(() => {
         if (activeField && suggestion) {
             setValue(activeField, suggestion);
         }
         setOpen(false);
-    };
+    }, [activeField, suggestion, setValue]);
 
-    const handleRewrite = async () => {
+    const handleRewrite = useCallback(async () => {
         if (!activeField) return;
         setLoading(true);
         const label = descriptionFields.find((f) => f.id === activeField)?.label;
@@ -40,7 +40,7 @@ export const SituationDescription = () => {
         const aiText = await getAISuggestion(prompt);
         setSuggestion(aiText.replace(/"/g, ''));
         setLoading(false);
-    };
+    }, [activeField]);
 
     return (
         <>
@@ -53,7 +53,7 @@ export const SituationDescription = () => {
                             label={field.label}
                             as="textarea"
                             fullWidth={true}
-                            register={register(field.id, field.validation)}
+                            register={register(field.id)}
                             error={errors[field.id]?.message as string | undefined}
                         />
                         <div className="flex justify-end absolute bottom-3 right-3 p-[2px] rounded-md bg-gradient-to-r from-violet-600 to-teal-400 inline-block">
