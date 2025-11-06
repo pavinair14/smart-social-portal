@@ -1,34 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { MultiStepForm } from './components/MultiStepForm'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="relative min-h-screen h-full w-full flex flex-col items-center overflow-hidden bg-gradient-to-b from-violet-200 to-violet-100 overflow-hidden pt-8 pb-16">
+
+      <h1 className='pb-4 z-10 text-violet-900 font-medium'>Smart Step</h1>
+
+      {/* form */}
+      <div className="relative z-10 w-full max-w-4xl px-10 py-6 bg-white rounded-xl h-full shadow-lg">
+        <MultiStepForm />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
