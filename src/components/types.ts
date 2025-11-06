@@ -9,6 +9,9 @@ export type SituationDescriptionData = z.infer<typeof SituationDescriptionSchema
 
 export type FormData = PersonalInfoData & FamilyFinancialInfoData & SituationDescriptionData;
 
+export type FamilyFinancialInfoInput = z.input<typeof FamilyFinancialInfoSchema>;
+export type FormDraft = PersonalInfoData & FamilyFinancialInfoInput & SituationDescriptionData;
+
 export type StepperType = {
     steps: { title: string }[],
     currentStep: number

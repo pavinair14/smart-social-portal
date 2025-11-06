@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import type { FieldProps } from "../steps/personalInfo/types";
 import { useFormContext } from "react-hook-form";
 import { cityMap } from "../steps/personalInfo/constants";
-import { ErrorField } from "../steps/Error";
+import { ErrorField } from "./ErrorField";
 
 
 export const Field: React.FC<FieldProps> = memo(({
@@ -39,7 +39,8 @@ export const Field: React.FC<FieldProps> = memo(({
     const handleFocus = useCallback(() => setFocused(true), []);
     const handleBlur = useCallback(() => setFocused(false), []);
 
-    const base = "w-full bg-transparent border-b border-gray-300 py-2 text-gray-800 focus:outline-none";
+    const base = "w-full bg-transparent border-b border-gray-300 py-2 text-gray-800 focus:outline-none autofill:bg-transparent autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] autofill:[-webkit-text-fill-color:rgb(31,41,55)]";
+    const errorId = error ? `${id}-error` : undefined;
 
     return (
         <div className={`${fullWidth ? "sm:col-span-2" : ""} relative`}>
@@ -55,6 +56,8 @@ export const Field: React.FC<FieldProps> = memo(({
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         className={base}
+                        aria-invalid={error ? "true" : "false"}
+                        aria-describedby={errorId}
                     >
                         <option value="">Select</option>
                         {options.map((o) => (
@@ -71,6 +74,8 @@ export const Field: React.FC<FieldProps> = memo(({
                         onBlur={handleBlur}
                         placeholder={placeholder}
                         className={`${base} resize-none h-20`}
+                        aria-invalid={error ? "true" : "false"}
+                        aria-describedby={errorId}
                     />
                 ) : (
                     <input
@@ -81,6 +86,8 @@ export const Field: React.FC<FieldProps> = memo(({
                         onBlur={handleBlur}
                         placeholder={placeholder}
                         className={base}
+                        aria-invalid={error ? "true" : "false"}
+                        aria-describedby={errorId}
                     />
                 )}
 
@@ -91,7 +98,7 @@ export const Field: React.FC<FieldProps> = memo(({
                 />
 
                 {error && (
-                    <ErrorField error={error} />
+                    <ErrorField error={error} fieldId={id} />
                 )}
             </div>
         </div >

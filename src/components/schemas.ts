@@ -44,37 +44,25 @@ export const personalInfoSchema = z.object({
 // Family & Financial Info Schema
 export const FamilyFinancialInfoSchema = z.object({
     maritalStatus: z.string().nonempty("Marital status is required"),
-    dependents: z.union([z.string(), z.number()])
-        .refine((val) => val !== "" && val !== null && val !== undefined, {
-            message: "Dependents count is required",
-        })
+    dependents: z.preprocess(
+        (val) => (typeof val === 'number' ? String(val) : val ?? ''),
+        z.string().min(1, "Dependents count is required")
+    )
         .transform((val) => Number(val))
-        .refine((val) => !isNaN(val), {
-            message: "Dependents must be a number",
-        })
-        .refine((val) => Number.isInteger(val), {
-            message: "Dependents must be a whole number",
-        })
-        .refine((val) => val >= 0, {
-            message: "Dependents cannot be negative",
-        })
-        .refine((val) => val <= 10, {
-            message: "Maximum 10 dependents allowed",
-        }),
+        .refine((val) => !Number.isNaN(val), { message: "Dependents must be numeric" })
+        .refine((val) => Number.isInteger(val), { message: "Dependents must be a whole number" })
+        .refine((val) => val >= 0, { message: "Dependents cannot be negative" })
+        .refine((val) => val <= 10, { message: "Maximum 10 dependents allowed" }),
     employmentStatus: z.string().nonempty("Employment status is required"),
     housingStatus: z.string().nonempty("Housing status is required"),
     currency: z.string().nonempty("Currency is required"),
-    monthlyIncome: z.union([z.string(), z.number()])
-        .refine((val) => val !== "" && val !== null && val !== undefined, {
-            message: "Monthly income is required",
-        })
+    monthlyIncome: z.preprocess(
+        (val) => (typeof val === 'number' ? String(val) : val ?? ''),
+        z.string().min(1, "Monthly income is required")
+    )
         .transform((val) => Number(val))
-        .refine((val) => !isNaN(val), {
-            message: "Monthly income must be a number",
-        })
-        .refine((val) => val >= 0, {
-            message: "Monthly income must be positive",
-        }),
+        .refine((val) => !Number.isNaN(val), { message: "Monthly income must be numeric" })
+        .refine((val) => val >= 0, { message: "Monthly income must be positive" }),
 });
 
 // Situation Description Schema
