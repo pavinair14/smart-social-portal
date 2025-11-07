@@ -7,9 +7,9 @@ jest.mock("@/services/aiClient", () => ({
 }));
 
 // Mock Vite env 
-Object.defineProperty(import.meta, "env", {
-    value: { VITE_OPENAI_API_KEY: "test-api-key" },
-});
+(globalThis as any).importMetaEnv = {
+    VITE_OPENAI_API_KEY: "test-api-key",
+};
 
 // Mock matchMedia
 window.matchMedia = window.matchMedia || (() => ({

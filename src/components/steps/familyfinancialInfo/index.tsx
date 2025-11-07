@@ -13,7 +13,7 @@ const FamilyFinancialInfo: React.FC = () => {
     } = useFormContext();
 
     return (
-        <div className="grid grid-cols-2 gap-x-12 gap-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
             {/* Marital Status */}
             <Field
                 id="maritalStatus"
@@ -54,7 +54,7 @@ const FamilyFinancialInfo: React.FC = () => {
             />
 
             {/* Monthly Income (Currency + Input) */}
-            <div className="col-span-2 flex gap-4">
+            <div className="sm:col-span-1 flex gap-4">
                 <div className="w-1/3">
                     <Field
                         id="currency"
@@ -79,7 +79,7 @@ const FamilyFinancialInfo: React.FC = () => {
                     />
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

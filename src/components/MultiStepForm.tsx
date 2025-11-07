@@ -40,7 +40,7 @@ export const MultiStepForm = () => {
         } else {
             setSubmitError(null);
             try {
-                await mockSubmitAPI(formdata);
+                await mockSubmitAPI();
                 setShowSubmitModal(true);
             } catch (error) {
                 console.error("Form submission failed:", error);

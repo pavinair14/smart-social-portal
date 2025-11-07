@@ -73,7 +73,7 @@ export const SituationDescription = () => {
                                 label={label}
                                 as="textarea"
                                 fullWidth
-                                className="pr-24 h-28"
+                                className="pr-41 h-28"
                                 register={register(id)}
                                 error={errors[id]?.message as string | undefined}
                             />
