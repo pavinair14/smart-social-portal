@@ -87,9 +87,11 @@ export const MultiStepForm = () => {
                 <div>
                     {/* Stepper */}
                     <Stepper steps={steps} currentStep={activeStep} />
+                    <div className="flex flex-row justify-between items-center">
+                        <p className="pb-4"><span className="text-red-500 pr-1.5">*</span>All fields must be filled to proceed</p>
 
-                    <p className="pb-4"><span className="text-red-500 pr-1.5">*</span>All fields must be filled to proceed</p>
-
+                        <Button type="button" variant="link" className="text-sm text-violet-900 z-10" onClick={handleFormReset}>Clear form</Button>
+                    </div>
                     {/* Error message */}
                     {submitError && (
                         <div

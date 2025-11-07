@@ -1,10 +1,9 @@
-import { useEffect, useState, useCallback, memo } from "react";
+import { useState, useCallback, memo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { useFormContext } from "react-hook-form";
 import type { FieldProps } from "../steps/personalInfo/types";
-import { cityMap } from "../steps/personalInfo/constants";
 import { ErrorField } from "./ErrorField";
 import { cn } from "@/lib/utils";
+import { useAutoFillLocation } from "@/hooks/useAutoFillLocation";
 
 export const Field: React.FC<FieldProps> = memo(({
     id,
@@ -20,26 +19,9 @@ export const Field: React.FC<FieldProps> = memo(({
 }) => {
     const [focused, setFocused] = useState(false);
     const reduceMotion = useReducedMotion();
-    const { watch, setValue } = useFormContext();
-
-    const city = watch("city");
-    const stateVal = watch("state");
-    const countryVal = watch("country");
 
     // Auto fills state & country when city is selected
-    useEffect(() => {
-        if (id !== "city" || !city) return;
-        const key = Object.keys(cityMap).find(
-            (k) => k.toLowerCase() === city.toLowerCase()
-        );
-        if (!key) return;
-
-        const mapping = cityMap[key];
-        if (!stateVal)
-            setValue("state", mapping.state, { shouldValidate: true, shouldDirty: true });
-        if (!countryVal)
-            setValue("country", mapping.country, { shouldValidate: true, shouldDirty: true });
-    }, [id, city, stateVal, countryVal, setValue]);
+    useAutoFillLocation();
 
     const handleFocus = useCallback(() => setFocused(true), []);
     const handleBlur = useCallback(() => setFocused(false), []);
