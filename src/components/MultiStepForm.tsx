@@ -21,6 +21,7 @@ export const MultiStepForm = () => {
     const { formdata, activeStep, setActiveStep, setFormData, reset: resetStore } = useFormStore();
     const [showSubmitModal, setShowSubmitModal] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const methods = useForm<FormDraft>({
         resolver: zodResolver(schemas[activeStep]) as any,
         mode: "onChange",
@@ -39,6 +40,7 @@ export const MultiStepForm = () => {
             setActiveStep(activeStep + 1);
         } else {
             setSubmitError(null);
+            setIsSubmitting(true);
             try {
                 await mockSubmitAPI();
                 setShowSubmitModal(true);
@@ -48,6 +50,8 @@ export const MultiStepForm = () => {
                     ? error.message
                     : "An unexpected error occurred. Please try again.";
                 setSubmitError(errorMessage);
+            } finally {
+                setIsSubmitting(false);
             }
         }
     }, [activeStep, setActiveStep, formdata]);
@@ -57,8 +61,7 @@ export const MultiStepForm = () => {
         setShowSubmitModal(false);
         resetStore();
         methods.reset(defaultFormValues as FormDraft);
-        setActiveStep(0);
-    }, [methods, resetStore, setActiveStep]);
+    }, [methods, resetStore]);
 
     // Handle click for back button
     const handleBackBtnClick = useCallback(() => {
@@ -84,9 +87,11 @@ export const MultiStepForm = () => {
                 <div>
                     {/* Stepper */}
                     <Stepper steps={steps} currentStep={activeStep} />
+                    <div className="flex flex-row justify-between items-center">
+                        <p className="pb-4"><span className="text-red-500 pr-1.5">*</span>All fields must be filled to proceed</p>
 
-                    <p className="pb-4"><span className="text-red-500 pr-1.5">*</span>All fields must be filled to proceed</p>
-
+                        <Button type="button" variant="link" className="text-sm text-violet-900 z-10" onClick={handleFormReset}>Clear form</Button>
+                    </div>
                     {/* Error message */}
                     {submitError && (
                         <div
@@ -129,7 +134,7 @@ export const MultiStepForm = () => {
                             Back
                         </Button>
                     )}
-                    <Button type="submit">{activeStep === 2 ? "Submit" : "Next"}</Button>
+                    <Button type="submit" disabled={isSubmitting}><>{isSubmitting ? <LoaderCircle hideText /> : activeStep === 2 ? "Submit" : "Next"}</></Button>
                 </div>
             </form>
 
