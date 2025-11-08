@@ -13,11 +13,15 @@ i18n
             en: { translation: en },
             ar: { translation: ar },
         },
+        lng: 'en', // default language
         fallbackLng: 'en',
         debug: false,
         interpolation: {
             escapeValue: false,
         },
+        detection: {
+            caches: [],
+        }
     });
 
 // Set initial dir attribute based on detected language
