@@ -1,7 +1,8 @@
-import { MultiStepForm } from './components/MultiStepForm';
-import { LanguageSwitcher } from './components/LanguageSwitcher'
-import { ErrorBoundary } from './components/ErrorBoundary';
+
+import { LanguageSwitcher } from './components/common/LanguageSwitcher'
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { useTranslation } from 'react-i18next';
+import { MultiStepForm } from './features/applicationForm/components/MultiStepForm';
 
 function App() {
   const { t } = useTranslation();

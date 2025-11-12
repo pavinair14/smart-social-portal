@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Field } from "../../shared/Field";
-import { ContactInfo } from "./ContactInfo";
-import { genderOptions } from "./constants";
-import type { FormField } from "./types";
+import { Field } from "../common/Field";
+import { useMemo } from "react";
+import { countryCodes, genderOptions } from "@/components/constants/personalInfo";
+import type { FormField } from "@/types/formField";
 
 
 
@@ -13,6 +13,12 @@ const PersonalInfo: React.FC = () => {
         formState: { errors },
     } = useFormContext();
     const { t } = useTranslation();
+
+
+    const countryCodeOptions = useMemo(() =>
+        countryCodes.map((c) => ({ label: `${c.label} (${c.code})`, value: c.code })),
+        []
+    );
 
     const fields = [
         { id: "name", label: t('fields.name') },
@@ -48,7 +54,37 @@ const PersonalInfo: React.FC = () => {
                     error={errors[id]?.message as string | undefined}
                 />
             ))}
-            <ContactInfo />
+            <Field
+                id="email"
+                label={t('fields.email')}
+                type="email"
+                register={register("email")}
+                error={errors.email?.message as string | undefined}
+            />
+
+            <div className="sm:col-span-1 flex gap-4">
+                <div className="w-1/3">
+                    <Field
+                        id="phoneCode"
+                        label={t('fields.code')}
+                        as="select"
+                        register={register("phCode")}
+                        options={countryCodeOptions}
+                        error={errors.phCode?.message as string | undefined}
+                    />
+                </div>
+
+                <div className="flex-1">
+                    <Field
+                        id="phone"
+                        label={t('fields.phone')}
+                        type="tel"
+                        register={register("phone")}
+                        error={errors.phone?.message as string | undefined}
+
+                    />
+                </div>
+            </div>
         </div>
     );
 };

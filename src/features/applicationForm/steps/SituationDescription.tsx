@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { getAISuggestion } from "@/services/aiClient";
 import { useFormContext } from "react-hook-form";
-import { descriptionFields } from "./constants";
-import SuggestionModal from "./SuggestionModal";
-import { Field } from "@/components/shared/Field";
+
+import { Field } from "@/features/applicationForm/common/Field";
 import { Sparkle } from "lucide-react";
+import { descriptionFields } from "@/components/constants/situationDescrtiption";
+import SuggestionModal from "@/components/steps/situationDescription/SuggestionModal";
 
 const SituationDescription = () => {
     const { register, setValue, watch, formState: { errors } } = useFormContext();

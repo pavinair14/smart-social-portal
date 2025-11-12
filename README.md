@@ -1,8 +1,6 @@
----
+# 🧭 Social Support — Multi‑Step Form (React + TypeScript)
 
-# 🧭 Smart Step — Multi‑Step Form (React + TypeScript)
-
-A progressive, accessible multi-step form built with React, TypeScript, and Vite. It features schema-driven validation (Zod), seamless step navigation, multi-language support (English + Arabic), and AI-assisted writing for text areas.
+Social Support Application is a government service portal prototype that allows citizens to easily apply for financial assistance through a guided, multi-step form. The system collects personal, family, and financial information and uses AI assistance to help users describe their financial situation clearly and effectively. It is designed to be responsive, accessible, and bilingual (English/Arabic) for an inclusive user experience.
 
 ---
 

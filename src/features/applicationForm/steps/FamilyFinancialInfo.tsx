@@ -1,11 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Field } from "../../shared/Field";
-import {
-    maritalStatusOptions,
-    employmentStatusOptions,
-    currencies,
-} from "./constants";
+import { Field } from "../common/Field";
+import { currencies, employmentStatusOptions, maritalStatusOptions } from "@/components/constants/familyfinancialInfo";
+
 
 const FamilyFinancialInfo: React.FC = () => {
     const {

@@ -1,22 +1,24 @@
 import { useCallback, useMemo, useState, lazy, Suspense, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { steps, defaultFormValues } from "./constant";
-import { Stepper } from "./Stepper";
+;
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { getSchemas, type FormDraft } from "./types";
+
 import { useFormStore } from "@/store/formStore";
 import { mockSubmitAPI } from "@/services/mockSubmitAPI";
 import { AlertCircle, X } from "lucide-react";
-import { useDebouncedEffect } from "../hooks/useDebouncedEffect";
-import { LoaderCircle } from "./shared/Loader";
-import PersonalInfo from "./steps/personalInfo";
+import { useDebouncedEffect } from "@/hooks/useDebouncedEffect";
+import PersonalInfo from "../steps/PersonalInfo";
+import { Stepper } from "./Stepper";
+import { getSchemas, type FormDraft } from "@/types/formField";
+import { defaultFormValues, steps } from "@/components/constants/formDefaults";
+import { LoaderCircle } from "@/components/common/Loader";
 
-const FamilyFinancialInfo = lazy(() => import("./steps/familyfinancialInfo"));
-const SituationDescription = lazy(() => import("./steps/situationDescription"));
 
+const FamilyFinancialInfo = lazy(() => import("../steps/FamilyFinancialInfo"));
+const SituationDescription = lazy(() => import("../steps/SituationDescription"));
 
 export const MultiStepForm = () => {
     const { formdata, activeStep, setActiveStep, setFormData, reset: resetStore } = useFormStore();

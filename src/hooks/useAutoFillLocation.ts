@@ -1,6 +1,7 @@
+import { cityMap } from "@/components/constants/personalInfo";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { cityMap } from "@/components/steps/personalInfo/constants";
+
 
 
 //  Automatically fills state and country based on city input.
