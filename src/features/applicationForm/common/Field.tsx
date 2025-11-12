@@ -1,9 +1,9 @@
 import { useState, useCallback, memo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import type { FieldProps } from "../../../components/steps/personalInfo/types";
 import { ErrorField } from "../../../components/ui/ErrorField";
 import { cn } from "@/lib/utils";
 import { useAutoFillLocation } from "@/hooks/useAutoFillLocation";
+import type { FieldProps } from "@/types/formField";
 
 export const Field: React.FC<FieldProps> = memo(({
     id,

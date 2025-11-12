@@ -42,34 +42,65 @@ Run locally (see setup below) and open the printed localhost URL from Vite (typi
 
 ```bash
 src/
+  App.tsx
+  main.tsx
+  assets/
+    docs/
   components/
-    MultiStepForm.tsx
-    Stepper.tsx
-    LanguageSwitcher.tsx
-    ErrorBoundry.tsx
-    shared/
-      Field.tsx
-      ErrorField.tsx
+    common/
+      ErrorBoundary.tsx
+      LanguageSwitcher.tsx
       Loader.tsx
-    steps/
-      personalInfo/
-      familyfinancialInfo/
-      situationDescription/
-  services/
-    aiClient.ts
-    mockSubmitAPI.ts
-  lib/
-    utils.ts
+    ui/
+      button.tsx
+      dialog.tsx
+      ErrorField.tsx
+      input.tsx
+      label.tsx
+      progress.tsx
+      textarea.tsx
+  constants/
+    familyfinancialInfo.ts
+    formDefaults.ts
+    personalInfo.ts
+    situationDescrtiption.ts
+  features/
+    applicationForm/
+      index.ts
+      common/
+        Field.tsx
+      components/
+        MultiStepForm.tsx
+        Stepper.tsx
+      steps/
+        FamilyFinancialInfo.tsx
+        PersonalInfo.tsx
+        SituationDescription.tsx
+        SuggestionModal.tsx
   hooks/
     useAutoFillLocation.ts
     useDebouncedEffect.ts
-  store/
-    formState.ts
   i18n/
+    config.ts
+    testInit.ts
     locales/
       ar.json
       en.json
-    config.ts
+  lib/
+    utils.ts
+  schemas/
+    validationSchema.ts
+  services/
+    aiClient.ts
+    mockSubmitAPI.ts
+  store/
+    formStore.ts
+  styles/
+    global.css
+  test/
+    setup.ts
+  types/
+    formField.ts
 ```
     
 ## ⚙️ Installation & Setup
@@ -80,8 +111,8 @@ src/
 
 ### Clone & Install
 
-git clone https://github.com/pavinair14/smart-step.git
-cd smart-step
+git clone https://github.com/pavinair14/social-support.git
+cd social-support
 npm install
 
 
