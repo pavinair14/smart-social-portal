@@ -1,7 +1,7 @@
 export const steps = [
-    { title: "Personal Information", translationKey: "steps.personalInfo" },
-    { title: "Family & Financial Info", translationKey: "steps.familyFinancialInfo" },
-    { title: "Situation Descriptions", translationKey: "steps.situationDescriptions" },
+    { translationKey: "steps.personalInfo" },
+    { translationKey: "steps.familyFinancialInfo" },
+    { translationKey: "steps.situationDescriptions" },
 ];
 
 export const defaultFormValues = {

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { ErrorBoundary as ReactErrorBoundary, type FallbackProps } from 'react-error-boundary';
 import type { ErrorInfo } from 'react';
 import { AlertTriangle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorBoundaryProps {
     children: ReactNode;
@@ -9,15 +10,14 @@ interface ErrorBoundaryProps {
 }
 
 const ErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
+    const { t } = useTranslation();
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-violet-200 to-violet-100 px-4">
             <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
                 <AlertTriangle className="mx-auto mb-4 h-16 w-16 text-red-500" />
 
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">Oops! Something went wrong</h1>
-                <p className="text-gray-600 mb-6">
-                    We encountered an unexpected error. Please try again later.
-                </p>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('errorBoundary.title')}</h1>
+                <p className="text-gray-600 mb-6">{t('errorBoundary.description')}</p>
 
                 <button
                     onClick={resetErrorBoundary}
@@ -25,12 +25,10 @@ const ErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
                      hover:bg-violet-800 transition-colors focus:outline-none 
                      focus:ring-2 focus:ring-offset-2 focus:ring-violet-900"
                 >
-                    Reload Application
+                    {t('errorBoundary.reload')}
                 </button>
 
-                <p className="mt-4 text-sm text-gray-500">
-                    If this problem persists, please contact support.
-                </p>
+                <p className="mt-4 text-sm text-gray-500">{t('errorBoundary.contactSupport')}</p>
             </div>
         </div>
     );

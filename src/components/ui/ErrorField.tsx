@@ -1,9 +1,11 @@
 import { Info } from "lucide-react";
 import { useState, useCallback, memo } from "react";
+import { useTranslation } from "react-i18next";
 
 export const ErrorField: React.FC<{ error: string; fieldId?: string }> = memo(({ error, fieldId }) => {
     const [showTooltip, setShowTooltip] = useState(false);
     const errorId = fieldId ? `${fieldId}-error` : undefined;
+    const { t } = useTranslation();
 
     const handleMouseEnter = useCallback(() => setShowTooltip(true), []);
     const handleMouseLeave = useCallback(() => setShowTooltip(false), []);
@@ -16,7 +18,7 @@ export const ErrorField: React.FC<{ error: string; fieldId?: string }> = memo(({
             role="alert"
             aria-live="polite"
         >
-            <Info size={16} aria-label="Error information" />
+            <Info size={16} aria-label={t('aria.errorInfo')} />
             {showTooltip && (
                 <div
                     id={errorId}

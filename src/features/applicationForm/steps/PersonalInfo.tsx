@@ -16,8 +16,8 @@ const PersonalInfo: React.FC = () => {
 
 
     const countryCodeOptions = useMemo(() =>
-        countryCodes.map((c) => ({ label: `${c.label} (${c.code})`, value: c.code })),
-        []
+        countryCodes.map((c) => ({ label: `${t(`geo.countries.${c.countryKey}`)} (${c.code})`, value: c.code })),
+        [t]
     );
 
     const fields = [

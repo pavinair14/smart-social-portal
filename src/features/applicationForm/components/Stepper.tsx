@@ -10,16 +10,17 @@ export const Stepper: React.FC<StepperType> = memo(({ steps, currentStep }) => {
     const { t } = useTranslation();
 
     return (
-        <nav aria-label={t("messages.formProgress") || "Form progress"}>
+        <nav aria-label={t("messages.formProgress")}>
             <ol
                 className="relative flex justify-between items-center w-full pb-6 pt-2"
                 role="list"
             >
-                {steps.map(({ title, translationKey }, i) => {
+                {steps.map(({ translationKey, title }, i) => {
                     const isCompleted = i < currentStep;
                     const isActive = i === currentStep;
                     const isLast = i === steps.length - 1;
-                    const translatedTitle = t(translationKey);
+                    const raw = t(translationKey);
+                    const translatedTitle = raw === translationKey ? (title ?? raw) : raw;
                     const status = isCompleted
                         ? t("aria.stepCompleted")
                         : isActive
@@ -28,7 +29,7 @@ export const Stepper: React.FC<StepperType> = memo(({ steps, currentStep }) => {
 
                     return (
                         <li
-                            key={title}
+                            key={translationKey}
                             className="relative flex flex-col items-center flex-1"
                             aria-current={isActive ? "step" : undefined}
                             aria-label={`${t("aria.stepLabel", { number: i + 1, title: translatedTitle, status })}`}

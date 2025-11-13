@@ -25,7 +25,6 @@
         "employmentStatus": "Employment Status",
         "housingStatus": "Housing Status",
         "currency": "Currency",
-        "monthlyIncome": "Monthly Income",
         "currentFinancialSituation": "Current Financial Situation",
         "employmentCircumstances": "Employment Circumstances",
         "reasonForApplying": "Reason for Applying"
@@ -38,7 +37,6 @@
         "married": "Married",
         "divorced": "Divorced",
         "widowed": "Widowed",
-        "employed": "Employed",
         "selfEmployed": "Self-employed",
         "unemployed": "Unemployed",
         "retired": "Retired",
@@ -55,6 +53,9 @@
         "clearForm": "Clear form",
         "rewrite": "Rewrite"
     },
+    "common": {
+        "select": "Select"
+    },
     "messages": {
         "allFieldsRequired": "All fields must be filled to proceed",
         "formSubmitted": "Form Submitted",
@@ -62,7 +63,10 @@
         "aiSuggestion": "AI Suggestion",
         "loading": "Thinking...",
         "error": "Error",
-        "skipToMainContent": "Skip to main content"
+        "skipToMainContent": "Skip to main content",
+        "noSuggestionYet": "No suggestion yet.",
+        "submissionFailedTitle": "Submission Failed",
+        "unexpectedError": "An unexpected error occurred. Please try again."
     },
     "placeholders": {
         "enterName": "Enter your full name",
@@ -74,6 +78,7 @@
         "enterEmail": "Enter your email",
         "enterPhone": "Enter your phone number",
         "enterHousingStatus": "e.g., Owned, Rented",
+        "enterDependents": "Enter number of dependents",
         "describeFinancialSituation": "Describe your current financial situation",
         "describeEmployment": "Describe your employment circumstances",
         "describeReason": "Describe your reason for applying"
@@ -82,7 +87,9 @@
         "formProgress": "Form progress",
         "stepCompleted": "Completed",
         "stepCurrent": "Current",
-        "stepLabel": "Step {{number}}: {{title}} - {{status}}"
+        "stepLabel": "Step {{number}}: {{title}} - {{status}}",
+        "dismissError": "Dismiss error",
+        "errorInfo": "Error information"
     },
     "validation": {
         "required": "{{field}} is required",
@@ -97,5 +104,47 @@
         "negative": "{{field}} cannot be negative",
         "positive": "{{field}} must be positive",
         "maxDependents": "Maximum {{max}} dependents allowed"
+    },
+    "geo": {
+        "countries": {
+            "india": "India",
+            "uae": "United Arab Emirates",
+            "usa": "United States",
+            "uk": "United Kingdom"
+        },
+        "states": {
+            "tamilNadu": "Tamil Nadu",
+            "karnataka": "Karnataka",
+            "maharashtra": "Maharashtra",
+            "telangana": "Telangana",
+            "dubai": "Dubai",
+            "abuDhabi": "Abu Dhabi",
+            "sharjah": "Sharjah",
+            "ajman": "Ajman"
+        }
+    },
+    "currency": {
+        "INR": "INR",
+        "AED": "AED",
+        "USD": "USD",
+        "EUR": "EUR"
+    },
+    "ai": {
+        "none": "none",
+        "prompts": {
+            "suggestion": "Write a short, realistic, professional description for \"{{label}}\". Be concise and avoid lists. Current text: {{userText}}.",
+            "rewrite": "Rewrite this text to an alternative concise professional version. Keep it realistic, plain text, no lists: \"{{text}}\""
+        }
+    },
+    "language": {
+        "switch": "Switch language",
+        "en": "English",
+        "ar": "العربية"
+    },
+    "errorBoundary": {
+        "title": "Oops! Something went wrong",
+        "description": "We encountered an unexpected error. Please try again later.",
+        "reload": "Reload Application",
+        "contactSupport": "If this problem persists, please contact support."
     }
 }

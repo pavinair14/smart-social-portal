@@ -59,6 +59,6 @@ export type FamilyFinancialInfoInput = z.input<typeof FamilyFinancialInfoSchema>
 export type FormDraft = PersonalInfoData & FamilyFinancialInfoInput & SituationDescriptionData;
 
 export type StepperType = {
-    steps: { title: string; translationKey: string }[],
+    steps: { translationKey: string; title?: string }[],
     currentStep: number
 }

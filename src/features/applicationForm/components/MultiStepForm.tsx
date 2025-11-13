@@ -59,7 +59,7 @@ export const MultiStepForm = () => {
                 console.error("Form submission failed:", error);
                 const errorMessage = error instanceof Error
                     ? error.message
-                    : "An unexpected error occurred. Please try again.";
+                    : t('messages.unexpectedError');
                 setSubmitError(errorMessage);
             } finally {
                 setIsSubmitting(false);
@@ -112,13 +112,13 @@ export const MultiStepForm = () => {
                         >
                             <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-3 shrink-0" />
                             <div className="flex-1">
-                                <h3 className="text-sm font-medium text-red-800">Submission Failed</h3>
+                                <h3 className="text-sm font-medium text-red-800">{t('messages.submissionFailedTitle')}</h3>
                                 <p className="mt-1 text-sm text-red-700">{submitError}</p>
                             </div>
                             <button
                                 onClick={() => setSubmitError(null)}
                                 className="ml-3 text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
-                                aria-label="Dismiss error"
+                                aria-label={t('aria.dismissError')}
                                 type="button"
                             >
                                 <X className="h-5 w-5" />

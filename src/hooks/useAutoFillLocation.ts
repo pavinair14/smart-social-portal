@@ -1,5 +1,6 @@
 import { cityMap } from "@/constants/personalInfo";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 
 
@@ -8,6 +9,7 @@ import { useFormContext } from "react-hook-form";
 //   Clears state and country when city is not recognized.
 export const useAutoFillLocation = () => {
     const { watch, setValue } = useFormContext();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const subscription = watch((value, { name }) => {
@@ -19,9 +21,9 @@ export const useAutoFillLocation = () => {
             );
 
             if (key) {
-                const { state, country } = cityMap[key];
-                setValue("state", state, { shouldValidate: true, shouldDirty: true });
-                setValue("country", country, { shouldValidate: true, shouldDirty: true });
+                const { stateKey, countryKey } = cityMap[key];
+                setValue("state", t(`geo.states.${stateKey}`), { shouldValidate: true, shouldDirty: true });
+                setValue("country", t(`geo.countries.${countryKey}`), { shouldValidate: true, shouldDirty: true });
             } else {
                 // Clear fields if the city isn't in the map
                 setValue("state", "", { shouldValidate: true, shouldDirty: true });

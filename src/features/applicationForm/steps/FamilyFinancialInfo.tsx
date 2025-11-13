@@ -19,7 +19,7 @@ const FamilyFinancialInfo: React.FC = () => {
                 label={t('fields.maritalStatus')}
                 as="select"
                 register={register("maritalStatus")}
-                options={maritalStatusOptions}
+                options={maritalStatusOptions.map(o => ({ label: t(`options.${o.value}`), value: o.value }))}
                 error={errors.maritalStatus?.message as string | undefined}
             />
 
@@ -30,7 +30,7 @@ const FamilyFinancialInfo: React.FC = () => {
                 type="number"
                 register={register("dependents")}
                 error={errors.dependents?.message as string}
-                placeholder="Enter number of dependents"
+                placeholder={t('placeholders.enterDependents')}
             />
 
             {/* Employment Status */}
@@ -39,7 +39,7 @@ const FamilyFinancialInfo: React.FC = () => {
                 label={t('fields.employmentStatus')}
                 as="select"
                 register={register("employmentStatus")}
-                options={employmentStatusOptions}
+                options={employmentStatusOptions.map(o => ({ label: t(`options.${o.value}`), value: o.value }))}
                 error={errors.employmentStatus?.message as string | undefined}
             />
 
@@ -61,7 +61,7 @@ const FamilyFinancialInfo: React.FC = () => {
                         as="select"
                         register={register("currency")}
                         options={currencies.map((c) => ({
-                            label: c.label,
+                            label: t(`currency.${c.code}`),
                             value: c.code,
                         }))}
                         error={errors.currency?.message as string | undefined}

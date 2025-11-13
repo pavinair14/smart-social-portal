@@ -4,6 +4,7 @@ import { ErrorField } from "../../../components/ui/ErrorField";
 import { cn } from "@/lib/utils";
 import { useAutoFillLocation } from "@/hooks/useAutoFillLocation";
 import type { FieldProps } from "@/types/formField";
+import { useTranslation } from "react-i18next";
 
 export const Field: React.FC<FieldProps> = memo(({
     id,
@@ -19,6 +20,7 @@ export const Field: React.FC<FieldProps> = memo(({
 }) => {
     const [focused, setFocused] = useState(false);
     const reduceMotion = useReducedMotion();
+    const { t } = useTranslation();
 
     // Auto fills state & country when city is selected
     useAutoFillLocation();
@@ -54,7 +56,7 @@ export const Field: React.FC<FieldProps> = memo(({
             <div className="relative">
                 {as === "select" ? (
                     <select {...fieldProps}>
-                        <option value="">Select</option>
+                        <option value="">{t('common.select')}</option>
                         {options.map((o) => (
                             <option key={o.value} value={o.value} className="text-slate-950">
                                 {o.label}

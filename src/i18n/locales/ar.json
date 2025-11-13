@@ -55,6 +55,9 @@
         "clearForm": "مسح النموذج",
         "rewrite": "إعادة كتابة"
     },
+    "common": {
+        "select": "اختر"
+    },
     "messages": {
         "allFieldsRequired": "يجب ملء جميع الحقول للمتابعة",
         "formSubmitted": "تم إرسال النموذج",
@@ -62,7 +65,10 @@
         "aiSuggestion": "اقتراح الذكاء الاصطناعي",
         "loading": "جاري التفكير...",
         "error": "خطأ",
-        "skipToMainContent": "الانتقال إلى المحتوى الرئيسي"
+        "skipToMainContent": "الانتقال إلى المحتوى الرئيسي",
+        "noSuggestionYet": "لا توجد اقتراحات بعد.",
+        "submissionFailedTitle": "فشل الإرسال",
+        "unexpectedError": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
     },
     "placeholders": {
         "enterName": "أدخل اسمك الكامل",
@@ -74,6 +80,7 @@
         "enterEmail": "أدخل بريدك الإلكتروني",
         "enterPhone": "أدخل رقم هاتفك",
         "enterHousingStatus": "مثل: مملوك، مستأجر",
+        "enterDependents": "أدخل عدد المعالين",
         "describeFinancialSituation": "صف وضعك المالي الحالي",
         "describeEmployment": "صف ظروف عملك",
         "describeReason": "صف سبب تقديمك للطلب"
@@ -82,7 +89,51 @@
         "formProgress": "تقدم النموذج",
         "stepCompleted": "مكتمل",
         "stepCurrent": "الحالي",
-        "stepLabel": "الخطوة {{number}}: {{title}} - {{status}}"
+        "stepLabel": "الخطوة {{number}}: {{title}} - {{status}}",
+        "dismissError": "إغلاق الخطأ",
+        "errorInfo": "معلومات الخطأ"
+    },
+    "geo": {
+        "countries": {
+            "india": "الهند",
+            "uae": "الإمارات العربية المتحدة",
+            "usa": "الولايات المتحدة",
+            "uk": "المملكة المتحدة"
+        },
+        "states": {
+            "tamilNadu": "تاميل نادو",
+            "karnataka": "كارناتاكا",
+            "maharashtra": "ماهاراشترا",
+            "telangana": "تيلانجانا",
+            "dubai": "دبي",
+            "abuDhabi": "أبوظبي",
+            "sharjah": "الشارقة",
+            "ajman": "عجمان"
+        }
+    },
+    "currency": {
+        "INR": "INR",
+        "AED": "AED",
+        "USD": "USD",
+        "EUR": "EUR"
+    },
+    "ai": {
+        "none": "لا شيء",
+        "prompts": {
+            "suggestion": "اكتب وصفًا قصيرًا وواقعيًا ومهنيًا لـ \"{{label}}\". كن موجزًا وتجنب القوائم. النص الحالي: {{userText}}.",
+            "rewrite": "أعد صياغة هذا النص إلى نسخة بديلة موجزة ومهنية. اجعلها واقعية ونصًا عاديًا دون قوائم: \"{{text}}\""
+        }
+    },
+    "language": {
+        "switch": "تغيير اللغة",
+        "en": "English",
+        "ar": "العربية"
+    },
+    "errorBoundary": {
+        "title": "عذرًا! حدث خطأ ما",
+        "description": "واجهنا خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا.",
+        "reload": "إعادة تحميل التطبيق",
+        "contactSupport": "إذا استمرت المشكلة، يرجى التواصل مع الدعم."
     },
     "validation": {
         "required": "{{field}} مطلوب",

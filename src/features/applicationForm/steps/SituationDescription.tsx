@@ -24,7 +24,10 @@ const SituationDescription = () => {
 
         const userText = watch(field);
         const translatedLabel = t(labelKey);
-        const prompt = `Write a short, realistic, professional description for "${translatedLabel}". Be concise and avoid lists. Current text: ${userText ? `"${userText}"` : "none"}.`;
+        const prompt = t('ai.prompts.suggestion', {
+            label: translatedLabel,
+            userText: userText ? `"${userText}"` : t('ai.none')
+        });
 
         try {
             const aiText = await getAISuggestion(prompt);
@@ -50,7 +53,7 @@ const SituationDescription = () => {
         if (!activeField || !suggestion) return;
 
         setLoading(true);
-        const prompt = `Rewrite this text to an alternative concise professional version. Keep it realistic, plain text, no lists: "${suggestion}"`;
+        const prompt = t('ai.prompts.rewrite', { text: suggestion });
 
         try {
             const aiText = await getAISuggestion(prompt);
