@@ -9,6 +9,13 @@ export const employmentStatusOptions = [
     { value: "unemployed" },
 ];
 
+export const housingStatusOptions = [
+    { value: "owned" },
+    { value: "rented" },
+    { value: "mortgaged" },
+    { value: "livingWithFamily" },
+];
+
 export const currencies = [
     { code: "INR" },
     { code: "AED" },

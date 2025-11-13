@@ -42,7 +42,11 @@
         "selfEmployed": "عمل حر",
         "unemployed": "عاطل عن العمل",
         "retired": "متقاعد",
-        "student": "طالب"
+        "student": "طالب",
+        "owned": "مملوك",
+        "rented": "مستأجر",
+        "mortgaged": "مرهون",
+        "livingWithFamily": "يعيش مع العائلة"
     },
     "buttons": {
         "next": "التالي",
@@ -98,17 +102,47 @@
             "india": "الهند",
             "uae": "الإمارات العربية المتحدة",
             "usa": "الولايات المتحدة",
-            "uk": "المملكة المتحدة"
+            "pakistan": "باكستان"
         },
         "states": {
             "tamilNadu": "تاميل نادو",
             "karnataka": "كارناتاكا",
             "maharashtra": "ماهاراشترا",
             "telangana": "تيلانجانا",
+            "delhi": "دلهي",
             "dubai": "دبي",
             "abuDhabi": "أبوظبي",
             "sharjah": "الشارقة",
-            "ajman": "عجمان"
+            "ajman": "عجمان",
+            "california": "كاليفورنيا",
+            "newYork": "نيويورك",
+            "texas": "تكساس",
+            "florida": "فلوريدا",
+            "punjab": "البنجاب",
+            "sindh": "السند",
+            "khyberPakhtunkhwa": "خيبر بختونخوا",
+            "balochistan": "بلوشستان"
+        },
+        "cities": {
+            "chennai": "تشيناي",
+            "bangalore": "بنغالور",
+            "mumbai": "مومباي",
+            "hyderabad": "حيدر أباد",
+            "delhi": "دلهي",
+            "dubai": "دبي",
+            "abuDhabi": "أبوظبي",
+            "sharjah": "الشارقة",
+            "ajman": "عجمان",
+            "losAngeles": "لوس أنجلوس",
+            "sanFrancisco": "سان فرانسيسكو",
+            "newYork": "نيويورك",
+            "houston": "هيوستن",
+            "miami": "ميامي",
+            "lahore": "لاهور",
+            "karachi": "كراتشي",
+            "islamabad": "إسلام آباد",
+            "peshawar": "بيشاور",
+            "quetta": "كويتا"
         }
     },
     "currency": {

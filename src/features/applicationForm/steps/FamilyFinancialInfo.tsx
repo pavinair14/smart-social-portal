@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Field } from "../common/Field";
-import { currencies, employmentStatusOptions, maritalStatusOptions } from "@/constants/familyfinancialInfo";
+import { currencies, employmentStatusOptions, maritalStatusOptions, housingStatusOptions } from "@/constants/familyfinancialInfo";
 
 
 const FamilyFinancialInfo: React.FC = () => {
@@ -47,9 +47,10 @@ const FamilyFinancialInfo: React.FC = () => {
             <Field
                 id="housingStatus"
                 label={t('fields.housingStatus')}
+                as="select"
                 register={register("housingStatus")}
+                options={housingStatusOptions.map(o => ({ label: t(`options.${o.value}`), value: o.value }))}
                 error={errors.housingStatus?.message as string}
-                placeholder={t('placeholders.enterHousingStatus')}
             />
 
             {/* Monthly Income (Currency + Input) */}
