@@ -32,16 +32,16 @@ export const SubmissionSuccessModal: React.FC<SubmissionSuccessModalProps> = ({
 
     const renderReferenceId = () => (
         <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
-            <p className="text-xs text-gray-600 mb-1">{t("submission.referenceId")}</p>
+            <p className="text-base text-gray-600 mb-1">{t("submission.referenceId")}</p>
 
             <div className="flex items-center justify-between">
-                <span className="font-mono font-semibold text-violet-900">
+                <span className="text-sm font-semibold text-violet-900">
                     {referenceId}
                 </span>
 
                 <button
                     onClick={handleCopy}
-                    className="p-1 rounded text-violet-600 hover:text-violet-800 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-colors"
+                    className="p-1 font-semibold cursor-pointer rounded text-violet-600 hover:text-violet-800 focus:outline-none focus:ring-0 focus:ring-violet-500 transition-colors"
                     aria-label={copied ? t("submission.copied") : t("submission.copy")}
                 >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
@@ -51,7 +51,7 @@ export const SubmissionSuccessModal: React.FC<SubmissionSuccessModalProps> = ({
     );
 
     const renderSubmissionDate = () => (
-        <div className="flex justify-between text-sm">
+        <div className="flex justify-between text-base">
             <span className="text-gray-600">{t("submission.submissionDate")}</span>
             <span className="font-medium text-gray-900">{submissionDate}</span>
         </div>
@@ -59,10 +59,10 @@ export const SubmissionSuccessModal: React.FC<SubmissionSuccessModalProps> = ({
 
     const renderNextSteps = () => (
         <div className="bg-blue-50 p-3 rounded-md border border-blue-200">
-            <p className="text-xs text-blue-800 font-medium mb-1">
+            <p className="text-sm text-blue-800 font-medium mb-1">
                 {t("submission.nextSteps")}
             </p>
-            <p className="text-xs text-blue-700">{t("submission.nextStepsMessage")}</p>
+            <p className="text-sm text-blue-700">{t("submission.nextStepsMessage")}</p>
         </div>
     );
 
@@ -82,13 +82,13 @@ export const SubmissionSuccessModal: React.FC<SubmissionSuccessModalProps> = ({
                     </div>
                 </DialogHeader>
 
+
                 <div className="space-y-4 py-4">
-                    <p className="text-gray-700 text-sm">{t("submission.message")}</p>
+                    <p className="text-gray-700 text-base">{t("submission.message")}</p>
                     {renderReferenceId()}
                     {renderSubmissionDate()}
                     {renderNextSteps()}
                 </div>
-
                 {/* Footer Action */}
                 <div className="flex justify-center pt-2">
                     <Button onClick={onClose} className="w-full max-w-xs" size="lg">
