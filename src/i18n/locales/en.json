@@ -187,6 +187,7 @@
         "message": "Thank you for applying for social support. Your request has been received.",
         "referenceId": "Reference ID",
         "copy": "Copy",
+        "copied": "Copied!",
         "submissionDate": "Submission Date",
         "nextSteps": "Next Steps",
         "nextStepsMessage": "We will review your application within 7 days and contact you by email.",

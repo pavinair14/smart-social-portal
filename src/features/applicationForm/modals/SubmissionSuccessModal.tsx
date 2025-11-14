@@ -64,8 +64,9 @@ export const SubmissionSuccessModal: React.FC<SubmissionSuccessModalProps> = ({
                             </span>
                             <button
                                 onClick={handleCopy}
-                                className="text-violet-600 hover:text-violet-800 transition-colors p-1"
+                                className="text-violet-600 hover:text-violet-800 transition-colors p-1 rounded focus:outline-none focus:ring-2 focus:ring-violet-500"
                                 title={t('submission.copy')}
+                                aria-label={copied ? t('submission.copied') : t('submission.copy')}
                             >
                                 {copied ? (
                                     <Check className="h-4 w-4" />

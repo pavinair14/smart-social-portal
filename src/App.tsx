@@ -17,7 +17,7 @@ function App() {
         </a>
 
         {/* Header section */}
-        <header>
+        <header role="banner">
           <LanguageSwitcher />
           <h1 className="pb-4 z-10 text-violet-900 font-semibold !text-4xl sm:!text-5xl text-center tracking-tight">
             {t('app.title')}
@@ -27,6 +27,7 @@ function App() {
         {/* form section */}
         <main
           id="main-content"
+          role="main"
           className="z-10 w-full h-full max-w-4xl px-10 py-6 bg-white rounded-xl shadow-xl"
         >
           <MultiStepForm />
