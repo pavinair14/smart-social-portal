@@ -1,4 +1,4 @@
-import { sanitizeSuggestion } from "@/lib/utils/sanitize";
+import { sanitizeSuggestion } from "@/utils/sanitize";
 import { openAIClient } from "./client";
 import { mapOpenAIError } from "./errors";
 

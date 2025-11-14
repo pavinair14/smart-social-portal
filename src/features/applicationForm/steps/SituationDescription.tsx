@@ -1,46 +1,55 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
-import { getAISuggestion } from "@/services/aiClient";
+import { getAISuggestion } from "@/lib/openai/getSuggestion";
 import { useFormContext } from "react-hook-form";
 
 import { Field } from "@/features/applicationForm/common/Field";
 import { Sparkle } from "lucide-react";
-import { descriptionFields } from "@/constants/situationDescrtiption";
+import { descriptionFields } from "@/features/applicationForm/constants/situationDescrtiption";
 import SuggestionModal from "@/features/applicationForm/modals/SuggestionModal";
 
 const SituationDescription = () => {
     const { register, setValue, watch, formState: { errors } } = useFormContext();
     const { t } = useTranslation();
+
     const [activeField, setActiveField] = useState<string | null>(null);
     const [suggestion, setSuggestion] = useState("");
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
-    /** Handle AI suggestion */
-    const handleAIClick = useCallback(async (field: string) => {
-        setActiveField(field);
+    /** DRY helper: AI call wrapper */
+    const fetchSuggestion = useCallback(async (prompt: string) => {
         setLoading(true);
-
-        const userText = watch(field);
-        const prompt = t('ai.prompts.suggestion', {
-            text: userText && String(userText).trim().length > 0 ? String(userText) : t('ai.none')
-        });
-
         try {
-            const aiText = await getAISuggestion(prompt);
-            setSuggestion(aiText);
-            setOpen(true);
-        } catch (err) {
-            console.error("AI suggestion failed:", err);
+            return await getAISuggestion(prompt);
         } finally {
             setLoading(false);
         }
-    }, [watch, t]);
+    }, []);
+
+    /** Handle AI suggestion */
+    const handleAIClick = useCallback(
+        async (field: string) => {
+            setActiveField(field);
+
+            const userText = String(watch(field) || "").trim();
+            const prompt = t("ai.prompts.suggestion", {
+                text: userText.length > 0 ? userText : t("ai.none")
+            });
+
+            const result = await fetchSuggestion(prompt);
+            if (!result) return;
+
+            setSuggestion(result);
+            setOpen(true);
+        },
+        [watch, t, fetchSuggestion]
+    );
 
     /** Accept suggestion */
     const handleAccept = useCallback(() => {
-        if (activeField && suggestion) {
+        if (activeField) {
             setValue(activeField, suggestion, { shouldValidate: true, shouldDirty: true });
         }
         setOpen(false);
@@ -50,27 +59,19 @@ const SituationDescription = () => {
     const handleRewrite = useCallback(async () => {
         if (!activeField || !suggestion) return;
 
-        setLoading(true);
-        const prompt = t('ai.prompts.rewrite', { text: suggestion });
-
-        try {
-            const aiText = await getAISuggestion(prompt);
-            setSuggestion(aiText);
-        } catch (err) {
-            console.error("AI rewrite failed:", err);
-        } finally {
-            setLoading(false);
-        }
-    }, [activeField, suggestion, t]);
+        const prompt = t("ai.prompts.rewrite", { text: suggestion });
+        const result = await fetchSuggestion(prompt);
+        if (result) setSuggestion(result);
+    }, [activeField, suggestion, t, fetchSuggestion]);
 
     return (
         <>
             <div className="space-y-6">
                 {descriptionFields.map(({ id, translationKey }) => {
-                    const isActive = activeField === id;
-                    const isLoading = loading && isActive;
-                    const fieldValue = watch(id) || "";
-                    const showAIButton = fieldValue.length > 10;
+                    const value = watch(id) || "";
+                    const allowAI = value.length > 10;
+                    const active = activeField === id;
+                    const aiLoading = loading && active;
 
                     return (
                         <div key={id} className="relative">
@@ -78,27 +79,27 @@ const SituationDescription = () => {
                                 id={id}
                                 label={t(translationKey)}
                                 as="textarea"
-                                fullWidth
                                 className="pr-41 h-28"
+                                fullWidth
                                 register={register(id)}
                                 error={errors[id]?.message as string | undefined}
                             />
-                            {showAIButton && (
-                                <div className="absolute bottom-3 right-3 p-[2px] rounded-md bg-gradient-to-r from-violet-600 to-teal-400">
+
+                            {allowAI && (
+                                <div className="absolute bottom-3 right-3">
                                     <Button
                                         type="button"
-                                        variant="secondary"
                                         size="sm"
+                                        variant="secondary"
+                                        className="bg-white text-violet-950 rounded-md"
+                                        disabled={aiLoading}
                                         onClick={() => handleAIClick(id)}
-                                        disabled={isLoading}
-                                        aria-busy={isLoading}
-                                        className="bg-white text-violet-950 hover:bg-white w-full rounded-md disabled:opacity-100"
                                     >
                                         <Sparkle
-                                            className={`inline-block text-violet-900 mr-2 ${isLoading ? "animate-spin" : ""}`}
                                             size={16}
+                                            className={`mr-2 ${aiLoading ? "animate-spin" : ""}`}
                                         />
-                                        {isLoading ? t("messages.loading") : t("buttons.getSuggestion")}
+                                        {aiLoading ? t("messages.loading") : t("buttons.getSuggestion")}
                                     </Button>
                                 </div>
                             )}

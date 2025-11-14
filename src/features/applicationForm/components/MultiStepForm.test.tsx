@@ -19,9 +19,9 @@ const fillStep1 = async (user: ReturnType<typeof userEvent.setup>) => {
     await user.type(screen.getByLabelText(/date of birth/i), '1998-05-15');
     await user.selectOptions(screen.getByLabelText(/gender/i), 'female');
     await user.type(screen.getByLabelText(/address/i), '123 XYZ street');
-    await user.type(screen.getByLabelText(/city/i), 'Chennai');
-    await user.type(screen.getByLabelText(/state/i), 'TN');
-    await user.type(screen.getByLabelText(/country/i), 'India');
+    await user.selectOptions(screen.getByLabelText(/country/i), 'india');
+    await user.selectOptions(screen.getByLabelText(/state/i), 'tamilNadu');
+    await user.selectOptions(screen.getByLabelText(/city/i), 'chennai');
     await user.type(screen.getByLabelText(/email/i), 'pavithra@example.com');
     await user.selectOptions(screen.getByLabelText(/code/i), '+91');
     await user.type(screen.getByLabelText(/phone/i), '9876543210');
@@ -34,7 +34,7 @@ const fillStep2 = async (user: ReturnType<typeof userEvent.setup>) => {
     await user.selectOptions(screen.getByLabelText(/marital status/i), 'single');
     await user.type(screen.getByLabelText(/dependents/i), '2');
     await user.selectOptions(screen.getByLabelText(/employment status/i), 'employed');
-    await user.type(screen.getByLabelText(/housing status/i), 'rented');
+    await user.selectOptions(screen.getByLabelText(/housing status/i), 'rented');
     await user.selectOptions(screen.getByLabelText(/currency/i), 'INR');
     await user.type(screen.getByLabelText(/monthly income/i), '5000');
 };
@@ -153,10 +153,10 @@ describe('MultiStepForm', () => {
         // Confirmation modal
         await waitFor(() => {
             expect(screen.getByText(/form submitted/i)).toBeInTheDocument();
-            expect(screen.getByRole('button', { name: /ok/i })).toBeInTheDocument();
+            expect(screen.getByRole('button', { name: /back to home/i })).toBeInTheDocument();
         });
 
-        await user.click(screen.getByRole('button', { name: /ok/i }));
+        await user.click(screen.getByRole('button', { name: /back to home/i }));
 
         await waitFor(() =>
             expect(screen.getByText('Personal Information')).toBeInTheDocument()

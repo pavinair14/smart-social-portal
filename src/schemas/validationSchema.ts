@@ -1,6 +1,6 @@
 import z from "zod";
 import i18next from "i18next";
-import { countryCodes } from "@/constants/personalInfo";
+import { countryCodes } from "@/features/applicationForm/constants/personalInfo";
 
 
 const t = (key: string, options?: Record<string, string | number>) => i18next.t(key, options);

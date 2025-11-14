@@ -1,24 +1,27 @@
 import { useCallback, useMemo, useState, lazy, Suspense, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-;
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/utils/cn";
 
 import { useFormStore } from "@/store/formStore";
-import { mockSubmitAPI } from "@/services/submitApplication";
-import { AlertCircle, X } from "lucide-react";
+import { mockSubmitAPI } from "@/features/applicationForm/services/submitApplication";
+import { getSchemas, type FormDraft } from "@/types/formField";
+
+import { defaultFormValues, steps } from "@/features/applicationForm/constants/formDefaults";
 import { useDebouncedEffect } from "@/hooks/useDebouncedEffect";
+
 import PersonalInfo from "../steps/PersonalInfo";
 import { Stepper } from "./Stepper";
-import { getSchemas, type FormDraft } from "@/types/formField";
-import { defaultFormValues, steps } from "@/constants/formDefaults";
 import { LoaderCircle } from "@/components/common/Loader";
 import { SubmissionSuccessModal } from "../modals/SubmissionSuccessModal";
-import { generateReferenceId } from "@/lib/utils/references";
-import { formatSubmissionDate } from "@/lib/utils/dateFormat";
 
+import { generateReferenceId } from "@/utils/references";
+import { formatSubmissionDate } from "@/utils/dateFormat";
+
+import { AlertCircle, X } from "lucide-react";
 
 const FamilyFinancialInfo = lazy(() => import("../steps/FamilyFinancialInfo"));
 const SituationDescription = lazy(() => import("../steps/SituationDescription"));
@@ -26,9 +29,11 @@ const SituationDescription = lazy(() => import("../steps/SituationDescription"))
 export const MultiStepForm = () => {
     const { formdata, activeStep, setActiveStep, setFormData, reset: resetStore } = useFormStore();
     const { t, i18n } = useTranslation();
+
     const [showSubmitModal, setShowSubmitModal] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [referenceId, setReferenceId] = useState("");
     const [submissionDate, setSubmissionDate] = useState("");
 
@@ -40,6 +45,7 @@ export const MultiStepForm = () => {
         defaultValues: formdata,
     });
 
+    // Clear Zod errors when lang or step changes
     useEffect(() => {
         methods.clearErrors();
     }, [i18n.language, activeStep, methods]);
@@ -51,42 +57,8 @@ export const MultiStepForm = () => {
         500
     );
 
-    const OnFormSubmit = useCallback(async () => {
-        if (activeStep < steps.length - 1) {
-            setActiveStep(activeStep + 1);
-        } else {
-            setSubmitError(null);
-            setIsSubmitting(true);
-            try {
-                await mockSubmitAPI();
-                setReferenceId(generateReferenceId());
-                setSubmissionDate(formatSubmissionDate());
-                setShowSubmitModal(true);
-            } catch (error) {
-                console.error("Form submission failed:", error);
-                const errorMessage = error instanceof Error
-                    ? error.message
-                    : t('messages.unexpectedError');
-                setSubmitError(errorMessage);
-            } finally {
-                setIsSubmitting(false);
-            }
-        }
-    }, [activeStep, setActiveStep, formdata]);
-
-    // Handle form reset after submission
-    const handleFormReset = useCallback(() => {
-        setShowSubmitModal(false);
-        resetStore();
-        methods.reset(defaultFormValues as FormDraft);
-    }, [methods, resetStore]);
-
-    // Handle click for back button
-    const handleBackBtnClick = useCallback(() => {
-        setActiveStep(activeStep - 1);
-    }, [activeStep, setActiveStep]);
-
-    const renderStep = useMemo(() => {
+    /** -------------- HELPERS -------------- **/
+    const getStepComponent = useCallback(() => {
         switch (activeStep) {
             case 0:
                 return <PersonalInfo />;
@@ -99,44 +71,96 @@ export const MultiStepForm = () => {
         }
     }, [activeStep]);
 
+    const handleSubmitForm = useCallback(async () => {
+        // Go to next step
+        if (activeStep < steps.length - 1) {
+            setActiveStep(activeStep + 1);
+            return;
+        }
+
+        // Final submission
+        setSubmitError(null);
+        setIsSubmitting(true);
+
+        try {
+            await mockSubmitAPI();
+            setReferenceId(generateReferenceId());
+            setSubmissionDate(formatSubmissionDate());
+            setShowSubmitModal(true);
+        } catch (error) {
+            console.error("Form submission failed:", error);
+            const msg =
+                error instanceof Error ? error.message : t("messages.unexpectedError");
+            setSubmitError(msg);
+        } finally {
+            setIsSubmitting(false);
+        }
+    }, [activeStep, setActiveStep, t]);
+
+    const handleFormReset = useCallback(() => {
+        setShowSubmitModal(false);
+        resetStore();
+        methods.reset(defaultFormValues as FormDraft);
+    }, [methods, resetStore]);
+
+    const handleBack = useCallback(() => {
+        setActiveStep(activeStep - 1);
+    }, [activeStep, setActiveStep]);
+
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(OnFormSubmit)} className="flex flex-col justify-between h-full">
+            <form
+                onSubmit={methods.handleSubmit(handleSubmitForm)}
+                className="flex flex-col justify-between h-full"
+            >
                 <div>
-                    {/* Stepper */}
                     <Stepper steps={steps} currentStep={activeStep} />
-                    <div className="flex flex-row justify-between items-center">
-                        <p className="pb-4"><span className="text-red-500 pr-1.5">*</span>{t('messages.allFieldsRequired')}</p>
 
-                        <Button type="button" variant="link" className="text-sm text-violet-900 z-10" onClick={handleFormReset}>{t('buttons.clearForm')}</Button>
+                    <div className="flex justify-between items-center pb-4">
+                        <p>
+                            <span className="text-red-500 pr-1.5">*</span>
+                            {t("messages.allFieldsRequired")}
+                        </p>
+
+                        <Button
+                            type="button"
+                            variant="link"
+                            className="text-sm text-violet-900"
+                            onClick={handleFormReset}
+                        >
+                            {t("buttons.clearForm")}
+                        </Button>
                     </div>
-                    {/* Error message */}
+
                     {submitError && (
                         <div
                             role="alert"
                             aria-live="assertive"
-                            className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md flex items-start"
+                            className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md flex"
                         >
                             <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-3 shrink-0" />
+
                             <div className="flex-1">
-                                <h3 className="text-sm font-medium text-red-800">{t('messages.submissionFailedTitle')}</h3>
+                                <h3 className="text-sm font-medium text-red-800">
+                                    {t("messages.submissionFailedTitle")}
+                                </h3>
                                 <p className="mt-1 text-sm text-red-700">{submitError}</p>
                             </div>
+
                             <button
-                                onClick={() => setSubmitError(null)}
-                                className="ml-3 text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
-                                aria-label={t('aria.dismissError')}
                                 type="button"
+                                onClick={() => setSubmitError(null)}
+                                aria-label={t("aria.dismissError")}
+                                className="ml-3 text-red-500 hover:text-red-700 focus:ring-2 focus:ring-red-500 rounded"
                             >
                                 <X className="h-5 w-5" />
                             </button>
                         </div>
                     )}
 
-
                     <div className="overflow-auto">
                         <Suspense fallback={<LoaderCircle />}>
-                            {renderStep}
+                            {getStepComponent()}
                         </Suspense>
                     </div>
                 </div>
@@ -144,17 +168,22 @@ export const MultiStepForm = () => {
                 {/* Navigation buttons */}
                 <div className={cn("flex pt-4", activeStep === 0 ? "justify-end" : "justify-between")}>
                     {activeStep > 0 && (
-                        <Button
-                            type="button"
-                            variant="outline"
-                            onClick={handleBackBtnClick}
-                        >
-                            {t('buttons.back')}
+                        <Button variant="outline" type="button" onClick={handleBack}>
+                            {t("buttons.back")}
                         </Button>
                     )}
-                    <Button type="submit" disabled={isSubmitting}><>{isSubmitting ? <LoaderCircle hideText /> : activeStep === 2 ? t('buttons.submit') : t('buttons.next')}</></Button>
-                </div >
-            </form >
+
+                    <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                            <LoaderCircle hideText />
+                        ) : activeStep === steps.length - 1 ? (
+                            t("buttons.submit")
+                        ) : (
+                            t("buttons.next")
+                        )}
+                    </Button>
+                </div>
+            </form>
 
             <SubmissionSuccessModal
                 open={showSubmitModal}
@@ -162,6 +191,6 @@ export const MultiStepForm = () => {
                 referenceId={referenceId}
                 submissionDate={submissionDate}
             />
-        </FormProvider >
-    )
-}
+        </FormProvider>
+    );
+};

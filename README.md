@@ -52,11 +52,14 @@ src/
       LanguageSwitcher.tsx
       Loader.tsx
     ui/
+      button.test.tsx
       button.tsx
+      dialog.test.tsx
       dialog.tsx
       ErrorField.tsx
       input.tsx
       label.tsx
+      progress.test.tsx
       progress.tsx
       textarea.tsx
   constants/
@@ -68,15 +71,20 @@ src/
     applicationForm/
       index.ts
       common/
+        Field.test.tsx
         Field.tsx
       components/
+        MultiStepForm.test.tsx
         MultiStepForm.tsx
+        Stepper.test.tsx
         Stepper.tsx
+      modals/
+        SubmissionSuccessModal.tsx
+        SuggestionModal.tsx
       steps/
         FamilyFinancialInfo.tsx
         PersonalInfo.tsx
         SituationDescription.tsx
-        SuggestionModal.tsx
   hooks/
     useAutoFillLocation.ts
     useDebouncedEffect.ts
@@ -87,12 +95,20 @@ src/
       ar.json
       en.json
   lib/
-    utils.ts
+    openai/
+      client.ts
+      errors.ts
+      getSuggestion.ts
+    utils/
+      cn.ts
+      dateFormat.ts
+      references.ts
+      sanitize.ts
   schemas/
+    schemas.test.ts
     validationSchema.ts
   services/
-    aiClient.ts
-    mockSubmitAPI.ts
+    submitApplication.ts
   store/
     formStore.ts
   styles/
