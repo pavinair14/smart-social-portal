@@ -1,6 +1,6 @@
 ﻿{
     "app": {
-        "title": "Smart Step",
+        "title": "Social Support",
         "description": "A social support portal that allows citizens to apply for financial assistance easily, quickly, and with smart help along the way."
     },
     "steps": {
@@ -25,7 +25,6 @@
         "employmentStatus": "Employment Status",
         "housingStatus": "Housing Status",
         "currency": "Currency",
-        "monthlyIncome": "Monthly Income",
         "currentFinancialSituation": "Current Financial Situation",
         "employmentCircumstances": "Employment Circumstances",
         "reasonForApplying": "Reason for Applying"
@@ -39,10 +38,13 @@
         "divorced": "Divorced",
         "widowed": "Widowed",
         "employed": "Employed",
-        "selfEmployed": "Self-employed",
         "unemployed": "Unemployed",
         "retired": "Retired",
-        "student": "Student"
+        "student": "Student",
+        "owned": "Owned",
+        "rented": "Rented",
+        "mortgaged": "Mortgaged",
+        "livingWithFamily": "Living with Family"
     },
     "buttons": {
         "next": "Next",
@@ -55,6 +57,9 @@
         "clearForm": "Clear form",
         "rewrite": "Rewrite"
     },
+    "common": {
+        "select": "Select"
+    },
     "messages": {
         "allFieldsRequired": "All fields must be filled to proceed",
         "formSubmitted": "Form Submitted",
@@ -62,7 +67,11 @@
         "aiSuggestion": "AI Suggestion",
         "loading": "Thinking...",
         "error": "Error",
-        "skipToMainContent": "Skip to main content"
+        "skipToMainContent": "Skip to main content",
+        "noSuggestionYet": "No suggestion yet.",
+        "editSuggestion": "Edit your suggestion here...",
+        "submissionFailedTitle": "Submission Failed",
+        "unexpectedError": "An unexpected error occurred. Please try again."
     },
     "placeholders": {
         "enterName": "Enter your full name",
@@ -74,6 +83,7 @@
         "enterEmail": "Enter your email",
         "enterPhone": "Enter your phone number",
         "enterHousingStatus": "e.g., Owned, Rented",
+        "enterDependents": "Enter number of dependents",
         "describeFinancialSituation": "Describe your current financial situation",
         "describeEmployment": "Describe your employment circumstances",
         "describeReason": "Describe your reason for applying"
@@ -82,7 +92,9 @@
         "formProgress": "Form progress",
         "stepCompleted": "Completed",
         "stepCurrent": "Current",
-        "stepLabel": "Step {{number}}: {{title}} - {{status}}"
+        "stepLabel": "Step {{number}}: {{title}} - {{status}}",
+        "dismissError": "Dismiss error",
+        "errorInfo": "Error information"
     },
     "validation": {
         "required": "{{field}} is required",
@@ -97,5 +109,88 @@
         "negative": "{{field}} cannot be negative",
         "positive": "{{field}} must be positive",
         "maxDependents": "Maximum {{max}} dependents allowed"
+    },
+    "geo": {
+        "countries": {
+            "india": "India",
+            "uae": "United Arab Emirates",
+            "usa": "United States",
+            "pakistan": "Pakistan"
+        },
+        "states": {
+            "tamilNadu": "Tamil Nadu",
+            "karnataka": "Karnataka",
+            "maharashtra": "Maharashtra",
+            "telangana": "Telangana",
+            "delhi": "Delhi",
+            "dubai": "Dubai",
+            "abuDhabi": "Abu Dhabi",
+            "sharjah": "Sharjah",
+            "ajman": "Ajman",
+            "california": "California",
+            "newYork": "New York",
+            "texas": "Texas",
+            "florida": "Florida",
+            "punjab": "Punjab",
+            "sindh": "Sindh",
+            "khyberPakhtunkhwa": "Khyber Pakhtunkhwa",
+            "balochistan": "Balochistan"
+        },
+        "cities": {
+            "chennai": "Chennai",
+            "bangalore": "Bangalore",
+            "mumbai": "Mumbai",
+            "hyderabad": "Hyderabad",
+            "delhi": "Delhi",
+            "dubai": "Dubai",
+            "abuDhabi": "Abu Dhabi",
+            "sharjah": "Sharjah",
+            "ajman": "Ajman",
+            "losAngeles": "Los Angeles",
+            "sanFrancisco": "San Francisco",
+            "newYork": "New York",
+            "houston": "Houston",
+            "miami": "Miami",
+            "lahore": "Lahore",
+            "karachi": "Karachi",
+            "islamabad": "Islamabad",
+            "peshawar": "Peshawar",
+            "quetta": "Quetta"
+        }
+    },
+    "currency": {
+        "INR": "INR",
+        "AED": "AED",
+        "USD": "USD",
+        "EUR": "EUR"
+    },
+    "ai": {
+        "none": "none",
+        "prompts": {
+            "suggestion": "Rewrite the following text into a concise, realistic, professional version. No lists, no markdown: \"{{text}}\"",
+            "rewrite": "Rewrite this text to an alternative concise professional version. Keep it realistic, plain text, no lists: \"{{text}}\""
+        }
+    },
+    "language": {
+        "switch": "Switch language",
+        "en": "English",
+        "ar": "العربية"
+    },
+    "errorBoundary": {
+        "title": "Oops! Something went wrong",
+        "description": "We encountered an unexpected error. Please try again later.",
+        "reload": "Reload Application",
+        "contactSupport": "If this problem persists, please contact support."
+    },
+    "submission": {
+        "title": "Application Submitted",
+        "message": "Thank you for applying for social support. Your request has been received.",
+        "referenceId": "Reference ID",
+        "copy": "Copy",
+        "copied": "Copied!",
+        "submissionDate": "Submission Date",
+        "nextSteps": "Next Steps",
+        "nextStepsMessage": "We will review your application within 7 days and contact you by email.",
+        "backToHome": "Back to Home"
     }
 }
