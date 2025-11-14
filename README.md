@@ -99,11 +99,13 @@ src/
       client.ts
       errors.ts
       getSuggestion.ts
+      suggestionService.ts
     utils/
       cn.ts
       dateFormat.ts
       references.ts
       sanitize.ts
+      textAnalysis.ts
   schemas/
     schemas.test.ts
     validationSchema.ts
@@ -118,6 +120,7 @@ src/
   types/
     formField.ts
 ```
+
     
 ## ⚙️ Installation & Setup
 

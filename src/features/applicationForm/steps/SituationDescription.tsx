@@ -1,13 +1,12 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
-import { getAISuggestion } from "@/lib/openai/getSuggestion";
 import { useFormContext } from "react-hook-form";
-
 import { Field } from "@/features/applicationForm/common/Field";
 import { Sparkle } from "lucide-react";
-import { descriptionFields } from "@/features/applicationForm/constants/situationDescription";
+import { descriptionFields } from "../constants/situationDescription";
 import SuggestionModal from "@/features/applicationForm/modals/SuggestionModal";
+import { getContextualSuggestion, getRewrittenSuggestion } from "@/lib/openai/suggestionService";
 
 const SituationDescription = () => {
     const { register, setValue, watch, formState: { errors } } = useFormContext();
@@ -18,38 +17,27 @@ const SituationDescription = () => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
-    /** DRY helper: AI call wrapper */
-    const fetchSuggestion = useCallback(async (prompt: string) => {
+    /** Handle AI suggestion */
+    const handleAIClick = useCallback(async (fieldId: string, context: string) => {
+        setActiveField(fieldId);
         setLoading(true);
+
         try {
-            return await getAISuggestion(prompt);
+            const userText = String(watch(fieldId) || "").trim();
+            const result = await getContextualSuggestion(userText, context);
+
+            setSuggestion(result.content);
+            setOpen(true);
+        } catch (err) {
+            console.error("AI suggestion failed:", err);
         } finally {
             setLoading(false);
         }
-    }, []);
-
-    /** Handle AI suggestion */
-    const handleAIClick = useCallback(
-        async (field: string) => {
-            setActiveField(field);
-
-            const userText = String(watch(field) || "").trim();
-            const prompt = t("ai.prompts.suggestion", {
-                text: userText.length > 0 ? userText : t("ai.none")
-            });
-
-            const result = await fetchSuggestion(prompt);
-            if (!result) return;
-
-            setSuggestion(result);
-            setOpen(true);
-        },
-        [watch, t, fetchSuggestion]
-    );
+    }, [watch]);
 
     /** Accept suggestion */
     const handleAccept = useCallback(() => {
-        if (activeField) {
+        if (activeField && suggestion) {
             setValue(activeField, suggestion, { shouldValidate: true, shouldDirty: true });
         }
         setOpen(false);
@@ -59,19 +47,27 @@ const SituationDescription = () => {
     const handleRewrite = useCallback(async () => {
         if (!activeField || !suggestion) return;
 
-        const prompt = t("ai.prompts.rewrite", { text: suggestion });
-        const result = await fetchSuggestion(prompt);
-        if (result) setSuggestion(result);
-    }, [activeField, suggestion, t, fetchSuggestion]);
+        setLoading(true);
+
+        try {
+            // Get field context
+            const fieldContext = descriptionFields.find(f => f.id === activeField)?.context ?? "";
+            const result = await getRewrittenSuggestion(suggestion, fieldContext);
+
+            setSuggestion(result.content);
+        } catch (err) {
+            console.error("AI rewrite failed:", err);
+        } finally {
+            setLoading(false);
+        }
+    }, [activeField, suggestion]);
 
     return (
         <>
             <div className="space-y-6">
-                {descriptionFields.map(({ id, translationKey }) => {
-                    const value = watch(id) || "";
-                    const allowAI = value.length > 10;
-                    const active = activeField === id;
-                    const aiLoading = loading && active;
+                {descriptionFields.map(({ id, translationKey, context }) => {
+                    const fieldValue = watch(id) || "";
+                    const showAIButton = fieldValue.trim().length > 0;
 
                     return (
                         <div key={id} className="relative">
@@ -79,27 +75,29 @@ const SituationDescription = () => {
                                 id={id}
                                 label={t(translationKey)}
                                 as="textarea"
-                                className="pr-41 h-28"
                                 fullWidth
+                                className="pr-41 h-28"
                                 register={register(id)}
                                 error={errors[id]?.message as string | undefined}
                             />
 
-                            {allowAI && (
+                            {showAIButton && (
                                 <div className="absolute bottom-3 right-3 p-[2px] rounded-md bg-gradient-to-r from-violet-600 to-teal-400">
                                     <Button
                                         type="button"
-                                        size="sm"
                                         variant="secondary"
-                                        className="bg-white text-violet-950 hover:bg-white w-full rounded-md disabled:opacity-100"
-                                        disabled={aiLoading}
-                                        onClick={() => handleAIClick(id)}
+                                        size="sm"
+                                        onClick={() => handleAIClick(id, context)}
+                                        disabled={loading && activeField === id}
+                                        className="bg-white text-violet-950 hover:bg-white rounded-md disabled:opacity-100"
                                     >
                                         <Sparkle
                                             size={16}
-                                            className={`inline-block text-violet-900 mr-2 ${aiLoading ? "animate-spin" : ""}`}
+                                            className={`mr-2 text-violet-900 ${loading && activeField === id ? "animate-spin" : ""}`}
                                         />
-                                        {aiLoading ? t("messages.loading") : t("buttons.getSuggestion")}
+                                        {loading && activeField === id
+                                            ? t("messages.loading")
+                                            : t("buttons.getSuggestion")}
                                     </Button>
                                 </div>
                             )}

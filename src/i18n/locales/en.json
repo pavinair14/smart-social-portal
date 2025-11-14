@@ -25,6 +25,7 @@
         "employmentStatus": "Employment Status",
         "housingStatus": "Housing Status",
         "currency": "Currency",
+        "monthlyIncome": "Monthly Income",
         "currentFinancialSituation": "Current Financial Situation",
         "employmentCircumstances": "Employment Circumstances",
         "reasonForApplying": "Reason for Applying"
@@ -168,7 +169,10 @@
         "none": "none",
         "prompts": {
             "suggestion": "Rewrite the following text into a concise, realistic, professional version. No lists, no markdown: \"{{text}}\"",
-            "rewrite": "Rewrite this text to an alternative concise professional version. Keep it realistic, plain text, no lists: \"{{text}}\""
+            "rewrite": "Rewrite this text to an alternative concise professional version. Keep it realistic, plain text, no lists: \"{{text}}\"",
+            "generateFinancialDescriptionWithWarning": "{{warningMessage}} Please generate a clear, concise description of the user's current financial hardship, including reasons for difficulty, relevant context, and why financial support is needed.",
+            "friendlyAssist": "The user wrote: \"{{text}}\". Please respond politely and conversationally. If the message is unrelated to describing their financial situation, gently guide them back by saying something like: 'I'm here to help you describe your financial situation. How can I assist?' If the message does contain financial information, please refine and improve the text while keeping the original meaning.",
+            "rewriteWithContext": "Rewrite the following text so it clearly describes the user's {{context}}. If the text is irrelevant or conversational, replace it with a simple and neutral description of the user's {{context}} instead. Only return the rewritten text, no explanations.\n\nUser text: \"{{text}}\""
         }
     },
     "language": {

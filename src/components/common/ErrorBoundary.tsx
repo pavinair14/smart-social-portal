@@ -18,17 +18,19 @@ const ErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-violet-200 to-violet-100 px-4">
-            <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
-                <AlertTriangle
-                    className="mx-auto mb-4 h-16 w-16 text-red-500"
-                    aria-hidden="true"
-                />
+            <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8 text-center">
+                <div className="flex items-center justify-center mb-4">
+                    <AlertTriangle
+                        className="mx-auto mb-4 mr-3 h-12 w-12 text-red-500"
+                        aria-hidden="true"
+                    />
 
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                    {t("errorBoundary.title")}
-                </h1>
+                    <h1 className="sm:!text-4xl !text-xl font-bold text-gray-900 mb-2">
+                        {t("errorBoundary.title")}
+                    </h1>
+                </div>
 
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 text-lg mb-8">
                     {t("errorBoundary.description")}
                 </p>
 
