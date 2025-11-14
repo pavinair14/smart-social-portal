@@ -46,6 +46,7 @@ export const Field: React.FC<FieldProps> = memo((props) => {
         placeholder,
         "aria-invalid": !!error,
         "aria-describedby": errorId,
+        "aria-required": true,
         ...register,
         onFocus: handleFocus,
         onBlur: handleBlur,
