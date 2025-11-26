@@ -19,7 +19,7 @@ function App() {
         {/* Header section */}
         <header role="banner">
           <LanguageSwitcher />
-          <h1 className="pb-4 z-10 text-violet-900 font-semibold !text-4xl sm:!text-5xl text-center tracking-tight">
+          <h1 className="pb-8 z-10 text-violet-900 font-semibold !text-4xl sm:!text-5xl text-center tracking-tight">
             {t('app.title')}
           </h1>
         </header>
